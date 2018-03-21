@@ -4,14 +4,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
-import javax.swing.Icon;
 import javax.swing.JOptionPane;
-import javax.swing.text.IconView;
 
-import jdk.nashorn.internal.runtime.regexp.joni.exception.JOniException;
-import sun.awt.IconInfo;
 /**
  * Clase que indica los procedimientos del cliente
  * @author Paola
@@ -115,10 +110,6 @@ public class Cliente
 
 		}
 		
-        
 	}
-	
-	
-	
 	
 }
