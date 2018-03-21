@@ -12,6 +12,11 @@ import javax.swing.text.IconView;
 
 import jdk.nashorn.internal.runtime.regexp.joni.exception.JOniException;
 import sun.awt.IconInfo;
+/**
+ * Clase que indica los procedimientos del cliente
+ * @author Paola
+ *
+ */
 
 public class Cliente
 
@@ -43,6 +48,7 @@ public class Cliente
 				String operador;
 				double total;
 				
+				//Canal de comunicacion con el servidor, especificando la direccion IP y el puerto
 				Socket cliente = new Socket (SERVIDOR,PUERTO + contador);
 				System.out.println("Conecto");
 				

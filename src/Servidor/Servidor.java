@@ -7,7 +7,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import javax.swing.JOptionPane;
-
+/**
+ * Clase que responde los requerimientos del cliente
+ * @author Paola
+ *
+ */
 public class Servidor
 {
 	/**
@@ -18,35 +22,42 @@ public class Servidor
 	
 	public static void main(String[] args) throws IOException
 	{
-		boolean iterar = false;
-		int contador = 0;
+		boolean iterar = false; //atributo para indicar si itera o no
+		int contador = 0;		//contador
 		
 		while(iterar == false)
 		{
 			try
 			{
+				//variables locales
 				double n1 = 0.0;
 				double n2 = 0.0;
 				String operacion = " ";
 				double total = 0.0;
 				int temp;
 				
+				//Canal de comunicacion abierto que espera que el cliente se conecte
 				ServerSocket server = new ServerSocket(PUERTO + contador);
 				
 				System.out.println("Esperando la respuesta del cliente..");
 				System.out.println("Esperando la conexión del cliente...");
 				
+				//Bloquea el programa hasta que llegue una solicitud de conexion
 				Socket cliente = server.accept();
 				
 				System.out.println("Conexion Cliente");
 				
-				ObjectOutputStream in = new ObjectOutputStream(cliente.getOutputStream());
-				ObjectInputStream out = new ObjectInputStream(cliente.getInputStream());
+				//Escribe los datos que vienen del socket
+				ObjectOutputStream oos = new ObjectOutputStream(cliente.getOutputStream());
 				
-				operacion = out.readUTF();
-				n1 = out.readDouble();
-				n2 = out.readDouble();
+				//Lee los datos que vienen del socket
+				ObjectInputStream ois = new ObjectInputStream(cliente.getInputStream());
 				
+				operacion = ois.readUTF(); //lee la cadena que trae el operador matematico
+				n1 = ois.readDouble();	   //lee el primer numero ingresado
+				n2 = ois.readDouble();	   //lee el segundo numero ingresado	 
+				
+				//instrucciones para que realice la operacion deseada
 				if(operacion.trim().compareToIgnoreCase("+") == 0)
 				{
 					total = n1 + n2;
@@ -65,28 +76,27 @@ public class Servidor
 				}
 				else
 				{
-					Exception m = new Exception("El operador " + "'" +operacion+ "'" + " es invalido." );
-					throw m;
+					extracted(operacion);
 				}
 				
-				in.writeDouble(total);
-				in.flush();
+				oos.writeDouble(total); //escribe la respuesta de la ooperacion
+				oos.flush();			//envia los datos pero no cierra el flujo
 				
-				temp = out.readInt();
+				temp = ois.readInt();	//lee la respuesta de continuar o no con operaciones
 				
-				if(temp == 0)
+				if(temp == 0) //si la respuesta fue no, se termina la ejecucion de la aplicacion
 				{
-					in.close();
-			        out.close();
+					oos.close();
+					ois.close();
 			        cliente.close();
 			        server.close();
 
 					iterar = true;
 				}
-				else
+				else		//si la respuesta fue si, sigue la ejecucion de la aplicacion
 				{					
-					in.close();
-			        out.close();
+					oos.close();
+					ois.close();
 			        cliente.close();
 			        server.close();
 			        contador ++;
@@ -102,6 +112,16 @@ public class Servidor
 						
 		}
 		
+	}
+
+	/**
+	 * Arroja una excepcion en caso de que el operador sea invalido
+	 * @param operacion
+	 * @throws Exception el operador es invalido
+	 */
+
+	private static void extracted(String operacion) throws Exception {
+		throw new Exception("El operador " + "'" +operacion+ "'" + " es invalido." );
 	}
 	
 	
