@@ -10,7 +10,9 @@ import javax.swing.JOptionPane;
 
 public class Servidor
 {
-	
+	/**
+	 * Constante que modela el puerto
+	 */
 	public static int PUERTO = 9000;
 	
 	
