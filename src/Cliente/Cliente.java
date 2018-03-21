@@ -14,6 +14,7 @@ import jdk.nashorn.internal.runtime.regexp.joni.exception.JOniException;
 import sun.awt.IconInfo;
 
 public class Cliente
+
 {
 	public static final String HOST = "localhost";
 	
@@ -33,7 +34,7 @@ public class Cliente
 			{	
 				double n1;
 				double n2;
-				String mensaje;
+				String operador;
 				double total;
 				
 				Socket cliente = new Socket (HOST,PUERTO + contador);
@@ -41,21 +42,22 @@ public class Cliente
 				
 				ObjectInputStream in = new ObjectInputStream(cliente.getInputStream());
 				ObjectOutputStream	out = new ObjectOutputStream(cliente.getOutputStream());
-				n1 = Double.parseDouble(JOptionPane.showInputDialog("Digite el primer numero"));
-				mensaje = JOptionPane.showInputDialog("Indique el símbolo de la operación:  \n + para sumar \n - para restar \n * para multiplicar \n / para dividir ");
-			   	n2 = Double.parseDouble(JOptionPane.showInputDialog("Digite el segundo Numero"));
+				n1 = Double.parseDouble(JOptionPane.showInputDialog("Digite el primer número"));
+			   	n2 = Double.parseDouble(JOptionPane.showInputDialog("Digite el segundo número"));
+				operador = JOptionPane.showInputDialog("Indique la operación a realizar:  \n Para suma: + \n Para resta: - \n Para multiplicación: * \n Para división: / ");
+
 			   	
-			   	out.writeUTF(mensaje);
+			   	out.writeUTF(operador);
 			   	out.writeDouble(n1);
 			   	out.writeDouble(n2);
 			   	out.flush();
 			   	
 			   	total = in.readDouble();
-		        JOptionPane.showMessageDialog(null, ("El resultado de " + "\n" + n1 + " " + mensaje + " " + n2 + " = " + total), "Resultado de la operación:", 1 , null );
+		        JOptionPane.showMessageDialog(null, "El resultado es: " + "\n" + n1 + " " + operador + " " + n2 + " = " + total);
+		        							
+		        verificar = JOptionPane.showInputDialog("¿Desea realizar una operación matematica? \n Digite S para si \n Digite N para no");
 		        
-		        verificar = JOptionPane.showInputDialog("¿Quiere realizar un cálculo? (responder: si o no.)");
-		        
-				if(verificar.compareTo("no") == 0)
+				if(verificar.compareTo("N") == 0)
 				{
 					out.writeInt(0);
 					out.flush();
@@ -89,6 +91,7 @@ public class Cliente
 		
         
 	}
+	
 	
 	
 	
