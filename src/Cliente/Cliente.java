@@ -43,6 +43,7 @@ public class Cliente
 		{	
 			try
 			{	
+				//variables locales
 				double n1;			
 				double n2;
 				String operador;
@@ -51,24 +52,37 @@ public class Cliente
 				//Canal de comunicacion con el servidor, especificando la direccion IP y el puerto
 				Socket cliente = new Socket (SERVIDOR,PUERTO + contador);
 				System.out.println("Conecto");
-				
+
+				//Lee los datos que vienen del socket
 				ObjectInputStream in = new ObjectInputStream(cliente.getInputStream());
+				//Escribe los datos que vienen del socket
 				ObjectOutputStream	out = new ObjectOutputStream(cliente.getOutputStream());
+				
+				//Pregunta por el primer número
 				n1 = Double.parseDouble(JOptionPane.showInputDialog("Digite el primer número"));
+				
+				//Pregunta por el segundo número
 			   	n2 = Double.parseDouble(JOptionPane.showInputDialog("Digite el segundo número"));
-				operador = JOptionPane.showInputDialog("Indique la operación a realizar:  \n Para suma: + \n Para resta: - \n Para multiplicación: * \n Para división: / ");
+				
+			   	//Pregunta por la operacion que se desea realizar
+			   	operador = JOptionPane.showInputDialog("Indique la operación a realizar:  \n Para suma: + \n Para resta: - \n Para multiplicación: * \n Para división: / ");
 
 			   	
-			   	out.writeUTF(operador);
-			   	out.writeDouble(n1);
-			   	out.writeDouble(n2);
-			   	out.flush();
+			   	out.writeUTF(operador);	//escribe la cadena que trae el operador matematico
+			   	out.writeDouble(n1);	//escribe el primer número
+			   	out.writeDouble(n2);	//escribe el segundo número
+			   	out.flush();			//envia los datos pero no cierra el flujo
 			   	
-			   	total = in.readDouble();
+			   	//Lee el resultado operación
+			   	total = in.readDouble();	
+			   	
+			   	//Muestra el resultado de la operación
 		        JOptionPane.showMessageDialog(null, "El resultado es: " + "\n" + n1 + " " + operador + " " + n2 + " = " + total);
-		        							
+		        
+		        //Pregunta si se quiere realizar mas operaciones
 		        verificar = JOptionPane.showInputDialog("¿Desea realizar una operación matematica? \n Digite S para si \n Digite N para no");
 		        
+		        //Si la respuesta es no, se detiene la ejecución 
 				if(verificar.compareTo("N") == 0)
 				{
 					out.writeInt(0);
@@ -80,7 +94,7 @@ public class Cliente
 			        
 					iterar = true;
 				}
-				else
+				else				        //Si la respuesta es si, continua la ejecución
 				{
 					out.writeInt(1);
 					out.flush();

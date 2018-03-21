@@ -46,11 +46,10 @@ public class Servidor
 				Socket cliente = server.accept();
 				
 				System.out.println("Conexion Cliente");
-				
-				//Escribe los datos que vienen del socket
+
+				//Escribe los datos que vienen del cliente
 				ObjectOutputStream oos = new ObjectOutputStream(cliente.getOutputStream());
-				
-				//Lee los datos que vienen del socket
+				//Lee los datos que vienen del cliente	
 				ObjectInputStream ois = new ObjectInputStream(cliente.getInputStream());
 				
 				operacion = ois.readUTF(); //lee la cadena que trae el operador matematico
