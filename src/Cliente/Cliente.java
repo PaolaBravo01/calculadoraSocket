@@ -16,8 +16,14 @@ import sun.awt.IconInfo;
 public class Cliente
 
 {
-	public static final String HOST = "localhost";
+	/**
+	 * Constante que modela el servidor
+	 */
+	public static final String SERVIDOR = "localhost";
 	
+	/**
+	 * Constante que modela el puerto
+	 */
 	public static int PUERTO = 9000; 
 	
 	
@@ -32,12 +38,12 @@ public class Cliente
 		{	
 			try
 			{	
-				double n1;
+				double n1;			
 				double n2;
 				String operador;
 				double total;
 				
-				Socket cliente = new Socket (HOST,PUERTO + contador);
+				Socket cliente = new Socket (SERVIDOR,PUERTO + contador);
 				System.out.println("Conecto");
 				
 				ObjectInputStream in = new ObjectInputStream(cliente.getInputStream());

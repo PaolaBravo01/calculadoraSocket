@@ -25,15 +25,14 @@ public class Servidor
 			{
 				double n1 = 0.0;
 				double n2 = 0.0;
-				String mensaje = " ";
+				String operacion = " ";
 				double total = 0.0;
 				int temp;
 				
 				ServerSocket server = new ServerSocket(PUERTO + contador);
 				
-				System.out.println("Enlazado");
-				System.out.println("Esperando");
-				System.out.println("Sigo Esperando.....");
+				System.out.println("Esperando la respuesta del cliente..");
+				System.out.println("Esperando la conexión del cliente...");
 				
 				Socket cliente = server.accept();
 				
@@ -42,29 +41,29 @@ public class Servidor
 				ObjectOutputStream in = new ObjectOutputStream(cliente.getOutputStream());
 				ObjectInputStream out = new ObjectInputStream(cliente.getInputStream());
 				
-				mensaje = out.readUTF();
+				operacion = out.readUTF();
 				n1 = out.readDouble();
 				n2 = out.readDouble();
 				
-				if(mensaje.trim().compareToIgnoreCase("+") == 0)
+				if(operacion.trim().compareToIgnoreCase("+") == 0)
 				{
 					total = n1 + n2;
 				}
-				else if(mensaje.trim().compareToIgnoreCase("-") == 0)
+				else if(operacion.trim().compareToIgnoreCase("-") == 0)
 				{
 					total = n1 - n2;
 				}
-				else if(mensaje.trim().compareToIgnoreCase("*") == 0)
+				else if(operacion.trim().compareToIgnoreCase("*") == 0)
 				{
 					total = n1 * n2;
 				}
-				else if(mensaje.trim().compareToIgnoreCase("/") == 0)
+				else if(operacion.trim().compareToIgnoreCase("/") == 0)
 				{
 					total = n1 / n2;
 				}
 				else
 				{
-					Exception m = new Exception("El operador " + "'" +mensaje+ "'" + " no corresponde a una operación matemática." );
+					Exception m = new Exception("El operador " + "'" +operacion+ "'" + " es invalido." );
 					throw m;
 				}
 				
